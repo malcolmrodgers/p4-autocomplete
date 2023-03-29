@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -42,6 +44,30 @@ public class    PrefixComparator implements Comparator<Term> {
     public int compare(Term v, Term w) {
         // change this to use myPrefixSize as specified,
         // replacing line below with code
+        String vWord = v.getWord();
+        String wWord = w.getWord();
+
+        int vLength = v.getWord().length();
+        int wLength = w.getWord().length();
+
+        int smaller = Math.min(vLength, wLength);
+        int newPrefix = Math.min(smaller, myPrefixSize);
+
+        if (vLength < myPrefixSize || wLength < myPrefixSize) {
         return v.getWord().compareTo(w.getWord());
+        }
+
+        for (int k=0; k<newPrefix; k++) {
+            char a = vWord.charAt(k);
+            char b = wWord.charAt(k);
+            int charDiff = a - b;
+
+            if (charDiff != 0) {
+                return charDiff;
+            }
+        }
+        
+        return 0;
+
     }
 }
